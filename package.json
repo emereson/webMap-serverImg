@@ -1,14 +1,14 @@
 {
-  "name": "webapp-img",
+  "name": "saveimgsrolex",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
- "scripts": {
+  "scripts": {
     "start": "node index.js",
     "start:dev": "nodemon index.js",
-    "start:prod": "SET NODE_ENV=production&nodemon index.js",
-    "debug": "ndb server.js"
+    "start:prod": "nodemon index.js",
+    "debug": "ndb index.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,9 +16,6 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "helmet": "^7.1.0",
-    "hpp": "^0.2.3",
-    "multer": "^1.4.5-lts.1",
-    "xss": "^1.0.15",
-    "xss-clean": "^0.1.4"
+    "multer": "^1.4.5-lts.1"
   }
 }

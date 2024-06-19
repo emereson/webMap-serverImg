@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "type": "module",
-  "scripts": {
-    "start": "node index.js",
-    "start:dev": "nodemon index.js",
-    "start:prod": "node index.js",
-    "debug": "ndb index.js"
+ "scripts": {
+    "start": "node server.js",
+    "start:dev": "nodemon server.js",
+    "start:prod": "SET NODE_ENV=production&nodemon server.js",
+    "debug": "ndb server.js"
   },
   "author": "",
   "license": "ISC",

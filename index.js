@@ -14,6 +14,20 @@ app.use(
   })
 );
 
+class AppError extends Error {
+  constructor(message, statusCode) {
+    super(message);
+
+    this.statusCode = statusCode;
+    this.status = `${statusCode}`.startsWith('4') ? 'error' : 'fail';
+    this.isOperational = true;
+
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
+
+export { AppError };
+
 const port = process.env.POR || 3112;
 
 
@@ -22,9 +36,10 @@ app.delete('/delete-image/:id', deleteImage);
 
 app.use('/image', express.static('./uploads'));
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something went wrong!');
+app.all('*', (req, res, next) => {
+  return next(
+    new AppError(`Can't find ${req.originalUrl} on this seerver! 💀`, 404)
+  );
 });
 
 app.listen(port, () => {

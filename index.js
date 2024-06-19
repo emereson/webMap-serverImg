@@ -14,7 +14,7 @@ app.use(
   })
 );
 
-const port = 3111 || 3112;
+const port = process.env.POR || 3112;
 
 
 app.post('/image', upload.single('image'), uploadImage);

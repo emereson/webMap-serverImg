@@ -3,14 +3,10 @@ import express from 'express';
 import helmet from 'helmet';
 import { uploadImage, deleteImage } from './controllers/imageController.js';
 import { upload } from './utils/image.multer.js';
-import xss from 'xss';
-import hpp from 'hpp';
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use(xss());
-app.use(hpp());
 
 app.use(
   helmet({
@@ -18,21 +14,7 @@ app.use(
   })
 );
 
-class AppError extends Error {
-  constructor(message, statusCode) {
-    super(message);
-
-    this.statusCode = statusCode;
-    this.status = `${statusCode}`.startsWith('4') ? 'error' : 'fail';
-    this.isOperational = true;
-
-    Error.captureStackTrace(this, this.constructor);
-  }
-}
-
-export { AppError };
-
-const port = process.env.POR || 3112;
+const port = 3111 || 3112;
 
 
 app.post('/image', upload.single('image'), uploadImage);
@@ -40,10 +22,9 @@ app.delete('/delete-image/:id', deleteImage);
 
 app.use('/image', express.static('./uploads'));
 
-app.all('*', (req, res, next) => {
-  return next(
-    new AppError(`Can't find ${req.originalUrl} on this seerver! 💀`, 404)
-  );
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something went wrong!');
 });
 
 app.listen(port, () => {

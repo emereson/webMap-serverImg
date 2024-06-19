@@ -14,7 +14,7 @@ app.use(
   })
 );
 
-const port = 3111 || 3112;
+const port = process.env.PORT || 3112;
 
 
 app.post('/image', upload.single('image'), uploadImage);
@@ -27,6 +27,6 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something went wrong!');
 });
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`Server listening on http://localhost:${port} ❤`);
 });
